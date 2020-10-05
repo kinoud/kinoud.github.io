@@ -135,29 +135,7 @@
     </ul>
     <div class="post-content">
         <p>代码如下，fname是要处理的GIF文件名，脚本与该文件放在同一文件夹下运行，结果也生成在同一文件夹，名为res-&lt;fname&gt;：</p>
-<p>```python</p>
-<p>from PIL import Image, ImageEnhance</p>
-<p>fname = ‘false-memory’<br>g = Image.open(fname+’.gif’)</p>
-<p>frames = []</p>
-<p>while True:<br>    print(“\rframe %d”%g.tell(),end=’’)</p>
-<pre><code># see https://stackoverflow.com/questions/46850318/transparent-background-in-gif-using-python-imageio
-h = g.convert(&#39;RGB&#39;)
-h = ImageEnhance.Contrast(h).enhance(3)
-h = h.convert(&#39;P&#39;, palette=Image.ADAPTIVE, colors=255)
-mask = Image.eval(g.convert(&#39;L&#39;), lambda a: 255 if a&gt;245 else 0)
-
-h.paste(255, mask)
-
-h.info[&#39;transparency&#39;] = 255
-
-frames.append(h)
-try:
-    g.seek(g.tell()+1)
-except:
-    print(&#39;&#39;)
-    break</code></pre>
-<p>frames[0].save(‘res-‘+fname+’.gif’,<br>               save_all=True,<br>               format=’GIF’,<br>               append_images=frames[1:],<br>               duration=0.1,<br>               loop=0,<br>               disposal=2,<br>               optimize=False)</p>
-
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image, ImageEnhance</span><br><span class="line"></span><br><span class="line">fname = <span class="string">&#x27;false-memory&#x27;</span></span><br><span class="line">g = Image.open(fname+<span class="string">&#x27;.gif&#x27;</span>)</span><br><span class="line"></span><br><span class="line">frames = []</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">    print(<span class="string">&quot;\rframe %d&quot;</span>%g.tell(),end=<span class="string">&#x27;&#x27;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># see https://stackoverflow.com/questions/46850318/transparent-background-in-gif-using-python-imageio</span></span><br><span class="line">    h = g.convert(<span class="string">&#x27;RGB&#x27;</span>)</span><br><span class="line">    h = ImageEnhance.Contrast(h).enhance(<span class="number">3</span>)</span><br><span class="line">    h = h.convert(<span class="string">&#x27;P&#x27;</span>, palette=Image.ADAPTIVE, colors=<span class="number">255</span>)</span><br><span class="line">    mask = Image.eval(g.convert(<span class="string">&#x27;L&#x27;</span>), <span class="keyword">lambda</span> a: <span class="number">255</span> <span class="keyword">if</span> a&gt;<span class="number">245</span> <span class="keyword">else</span> <span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">    h.paste(<span class="number">255</span>, mask)</span><br><span class="line"></span><br><span class="line">    h.info[<span class="string">&#x27;transparency&#x27;</span>] = <span class="number">255</span></span><br><span class="line"></span><br><span class="line">    frames.append(h)</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        g.seek(g.tell()+<span class="number">1</span>)</span><br><span class="line">    <span class="keyword">except</span>:</span><br><span class="line">        print(<span class="string">&#x27;&#x27;</span>)</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line"></span><br><span class="line">frames[<span class="number">0</span>].save(<span class="string">&#x27;res-&#x27;</span>+fname+<span class="string">&#x27;.gif&#x27;</span>,</span><br><span class="line">               save_all=<span class="literal">True</span>,</span><br><span class="line">               format=<span class="string">&#x27;GIF&#x27;</span>,</span><br><span class="line">               append_images=frames[<span class="number">1</span>:],</span><br><span class="line">               duration=<span class="number">0.1</span>,</span><br><span class="line">               loop=<span class="number">0</span>,</span><br><span class="line">               disposal=<span class="number">2</span>,</span><br><span class="line">               optimize=<span class="literal">False</span>)</span><br><span class="line">               </span><br></pre></td></tr></table></figure>
     </div>
 </article>
         </main>
