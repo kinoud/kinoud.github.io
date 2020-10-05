@@ -134,8 +134,9 @@
         </li>
     </ul>
     <div class="post-content">
-        <p>代码如下，fname是要处理的GIF文件名，脚本与该文件放在同一文件夹下运行，结果也生成在同一文件夹，名为res-<fanme>：</p>
-<p>```python<br>from PIL import Image, ImageEnhance</p>
+        <p>代码如下，fname是要处理的GIF文件名，脚本与该文件放在同一文件夹下运行，结果也生成在同一文件夹，名为res-&lt;fname&gt;：</p>
+<p>```python</p>
+<p>from PIL import Image, ImageEnhance</p>
 <p>fname = ‘false-memory’<br>g = Image.open(fname+’.gif’)</p>
 <p>frames = []</p>
 <p>while True:<br>    print(“\rframe %d”%g.tell(),end=’’)</p>
