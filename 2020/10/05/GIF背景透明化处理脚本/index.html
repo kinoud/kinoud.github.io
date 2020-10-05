@@ -123,7 +123,7 @@
     
     
     <h2 class="post-title">
-        Hello World
+        GIF背景透明化处理脚本
     </h2>
     <ul class="post-date">
         <li>
@@ -134,19 +134,28 @@
         </li>
     </ul>
     <div class="post-content">
-        <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+        <p>代码如下，fname是要处理的GIF文件名，脚本与该文件放在同一文件夹下运行，结果也生成在同一文件夹，名为res-<fanme>：</p>
+<p>```python<br>from PIL import Image, ImageEnhance</p>
+<p>fname = ‘false-memory’<br>g = Image.open(fname+’.gif’)</p>
+<p>frames = []</p>
+<p>while True:<br>    print(“\rframe %d”%g.tell(),end=’’)</p>
+<pre><code># see https://stackoverflow.com/questions/46850318/transparent-background-in-gif-using-python-imageio
+h = g.convert(&#39;RGB&#39;)
+h = ImageEnhance.Contrast(h).enhance(3)
+h = h.convert(&#39;P&#39;, palette=Image.ADAPTIVE, colors=255)
+mask = Image.eval(g.convert(&#39;L&#39;), lambda a: 255 if a&gt;245 else 0)
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+h.paste(255, mask)
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+h.info[&#39;transparency&#39;] = 255
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+frames.append(h)
+try:
+    g.seek(g.tell()+1)
+except:
+    print(&#39;&#39;)
+    break</code></pre>
+<p>frames[0].save(‘res-‘+fname+’.gif’,<br>               save_all=True,<br>               format=’GIF’,<br>               append_images=frames[1:],<br>               duration=0.1,<br>               loop=0,<br>               disposal=2,<br>               optimize=False)</p>
 
     </div>
 </article>
